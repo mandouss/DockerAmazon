@@ -5,6 +5,7 @@ app_name='search_app'
 
 urlpatterns =[
         path('', views.searchResult, name='searchResult'),
-        path('createNewGood/', views.createNewGood, name='createNewGood'),
+        path('createNewCat/', views.createNewCat, name='createNewGat'),
         path('searchOrder/', views.searchOrder, name='searchOrder'),
+        path('createNewCat/createNewGood/', views.createNewGood, name='createNewGood'),
         ]

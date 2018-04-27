@@ -28,11 +28,11 @@
 	</div>	
 	<div class="mx-auto">	
 		<a href="{% url 'shop:allGoodCat' %}" class="btn btn-secondary btn-block my_custom_button">Return to Home</a>
-		<p class="text-center my_search_text">Want to Order "{{query}}" now?</p>
+		<p class="text-center my_search_text">Want to Order "{{query}}" now? Create a new category and then Add the Good your like.</p>
 	</div>
 	{% if not goods %}
 	<div class="mx-auto">
-		<form method='POST' action='createNewGood/'>{% csrf_token %}  
+		<form method='POST' action='createNewCat/'>{% csrf_token %}  
 			{{ form | crispy}}  
 		<input class="btn btn-secondary btn-block my_custom_button" type='submit' value='submit' />  
 		</form>

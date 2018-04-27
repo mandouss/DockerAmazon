@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block metadescription %}
+	Add new good you want! Enjoy !
+{% endblock %}
+{% block title %}
+	Search - Mini Amazon
+{% endblock %}
+{% block content %}
+<div>
+	<p class="text-center my_search_text">You have searched for: <b>"{{query}}"</b></p>
+</div>
+<div class="container">	
+	<div class="mx-auto">	
+		<a href="{% url 'shop:allGoodCat' %}" class="btn btn-secondary btn-block my_custom_button">Return to Home</a>
+		<p class="text-center my_search_text">Congratulations! Now Create a new good your like.</p>
+	</div>
+	<div class="mx-auto">
+		<form method='POST' action='createNewGood/'>{% csrf_token %}  
+			{{ form | crispy}}  
+		<input class="btn btn-secondary btn-block my_custom_button" type='submit' value='submit' />  
+		</form>
+	<div>
+</div>
+{% endblock %}

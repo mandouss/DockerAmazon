@@ -2,6 +2,13 @@ from django import forms
 from django.forms import ModelForm
 from shop.models import Good, Category
 
+
+class NewCatForm(ModelForm):
+
+    class Meta:
+        model=Category
+        fields=['name', 'slug','description', 'image']
+
 class NewGoodForm(ModelForm):
     description = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Good Name'})) 
     slug = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'must be same as description, use dash to replace the space'})) 

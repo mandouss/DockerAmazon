@@ -5,7 +5,7 @@ from django.forms import ModelForm
 
 class Category(models.Model):
     name = models.CharField(max_length=120, unique=True)
-    slug = models.CharField(max_length=120, unique=True)
+    slug = models.SlugField(max_length=119, unique=True)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='category', blank=True, default='category/classify.png')
 

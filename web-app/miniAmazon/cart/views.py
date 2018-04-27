@@ -3,6 +3,7 @@ from shop.models import Good
 from .models import Cart, CartItem
 from shop.forms import AorderForm
 from shop.models import Good, Aorder, Warehouse
+from django.core.exceptions import ObjectDoesNotExist
 
 def _cart_id(request):
     cart = request.session.session_key
@@ -41,7 +42,6 @@ def cart_detail(request, total=0, counter=0, cart_items = None):
             counter += cart_item.amount
     except ObjectDoesNotExist:
         pass
-
     return render(request, 'cart.html', dict(cart_items = cart_items, total = total, counter = counter))
 
 
