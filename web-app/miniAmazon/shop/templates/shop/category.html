@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block metadescription %}
+	{% if category %}
+		{{category.description|truncatewords:80 }}
+	{% else %}
+		Welcome to the Mini Amazon! Enjoy!
+	{% endif %}
+{% endblock %}
+{% block title %}
+	{% if category %}
+		{{ category.name }} - Mini Amazon
+	{% else %}
+		See Our Goods Collection - Mini Amazon
+	{% endif %}
+
+{% endblock %}
+{% block content %}
+	{% if category %}
+	<div class="row my_row_class">
+		<div class="mx-auto">
+			<p><a href="{% url 'shop:allGoodCat' %}">Our Good Collection</a> | {{category.name}}</p>
+		</div>
+	</div>
+	{% endif %}
+	<div class="my_good_image_css col-12 col-sm-12 col-lg-12 text-center">
+	{% if category %}
+	<img class="my_image my_good_image_css_img" src="{{ category.image.url }}" alt="{category.name }}">
+	</div>
+	<br>
+	<div>
+		<h1 class="text-center my_title">{{ category.name }}</h1>
+		<p class="text-justify">{{ category.description }}</p>
+	</div>
+	{% else %}
+		<img class="my_banner" src="{% static 'img/fate.png' %}" width="100%", height="auto" alt="Our Goods Collection">
+	</div>
+	<br>
+	<div>
+		<h1 class="text-center my_title">Our Good Collection, Enjoy!</h1>
+	</div>
+	{% endif %}
+	<div class="container">
+		<div class="row mx-auto">
+			{% for good in goods.object_list %}
+			<div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+				<div class="card text-center" style="min-width: 18rem;">
+					<a href="{{good.get_url}}"><img class="card-img-top my_image" src="{{good.image.url}}" alt="{{good.name}}"></a>
+					<div class="card-body">
+						<h4>{{good.description}}</h4>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		<div class="mx-auto">
+			{% if goods.paginator.num_pages > 1 %}
+				<hr>
+				<div class="text-center">
+					{% for pg in goods.paginator.page_range %}
+					<a href="?page={{pg}}" class="btn btn-light btn-sm {% if goods.number == pg %}active{% endif %}">{{pg}}</a>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+		<br>
+	</div>
+{% endblock %}

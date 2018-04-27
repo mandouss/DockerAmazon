@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block metadescription %}
+	{{ good.description }}
+{% endblock %}
+{% block title %}
+	{{good.description}} - Mini Amazon
+{% endblock %}
+{% block content %}
+<div class="row my_row_class">
+	<div class="mx-auto">
+		<p><a href="{% url 'shop:allGoodCat' %}">Home</a> | <a href=" {{ good.category.get_url }}">{{good.category}}</a> | {{good.description}}</p>
+	</div>
+	<div class="container">
+		<br>
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+				<div style="min-width: 18rem ">
+					<img class="my_good_image_css_item" src="{{good.image.url}}" alt ="{{good.description}}">
+				</div>
+			</div>
+			<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+			 	<div>
+					<h1 class="my_good_title">{{good.description}}</h1>
+					<p class="my_title">Good Detail:</p>
+					<p class="text-justify my_good_text">{{good.detail}}</p>			
+					<a class="btn btn-secondary" href="{% url 'cart:add_cart' good.ID %}">Add to Cart</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

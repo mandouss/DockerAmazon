@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block metadescription %}
+	We have a variety of goods you want. Pick up one!
+{% endblock %}
+{% block title %}
+	Search - Mini Amazon
+{% endblock %}
+{% block content %}
+<div>
+	<p class="text-center my_search_text">You have searched for: <b>"{{query}}"</b></p>
+</div>
+<div class="container">
+	<div class="row mx-auto">
+		{% for good in goods %}
+		<div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+			<div class="card text-center" style="min-width: 18rem;">
+				<a href="{{good.get_url}}"><img class="card-img-top my_image" src="{{good.image.url}}" alt="{{good.name}}"></a>
+				<div class="card-body">
+					<h4>{{good.description}}</h4>
+				</div>
+			</div>
+		</div>
+		{% empty %}
+		<div class="row mx-auto"><p class="text-center my_search_text">0 results found.</p></div>
+		{% endfor %}
+	</div>	
+	<div class="mx-auto">	
+		<a href="{% url 'shop:allGoodCat' %}" class="btn btn-secondary btn-block my_custom_button">Return to Home</a>
+		<p class="text-center my_search_text">Want to Order "{{query}}" now?</p>
+	</div>
+	{% if not goods %}
+	<div class="mx-auto">
+		<form method='POST' action='createNewGood/'>{% csrf_token %}  
+			{{ form | crispy}}  
+		<input class="btn btn-secondary btn-block my_custom_button" type='submit' value='submit' />  
+		</form>
+	<div>
+	{% endif %}
+</div>
+{% endblock %}
