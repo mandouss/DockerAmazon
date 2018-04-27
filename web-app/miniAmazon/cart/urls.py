@@ -10,4 +10,5 @@ urlpatterns = [
         path('full_remove/<int:good_id>/', views.full_remove, name="full_remove"),
         path('order/', views.create_order, name="create_order"),
         path('order/accept_order/', views.accept_order, name="accept_order"),
+        #path('order/accept_order/order_success/', views.order_success, name="order_success"),
         ]

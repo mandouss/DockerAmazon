@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from shop.models import Good
 from .models import Cart, CartItem
 from shop.forms import AorderForm
+from django.conf import settings
 from shop.models import Good, Aorder, Warehouse
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 
 def _cart_id(request):
     cart = request.session.session_key
@@ -77,11 +79,16 @@ def create_order(request, total=0, counter=0, cart_items = None):
     aorderform = AorderForm()
     return render(request, 'order.html', dict(aorderform=aorderform, cart_items = cart_items, total = total, counter = counter))
 
+def email(to_email, subject, message):
+    from_email = settings.EMAIL_HOST_USER
+    send_mail(subject, message, from_email, to_email, fail_silently=False)
+
 def accept_order(request, cart_items = None):
     form = AorderForm(request.POST or None)
     cart = Cart.objects.get(cart_id=_cart_id(request))
     UID = None
     WID = 0
+    order_list=[]
     if request.user.is_authenticated:
         current_user = request.user
         UID = current_user.id
@@ -97,7 +104,7 @@ def accept_order(request, cart_items = None):
                 WID = w.whid
         cart_items = CartItem.objects.filter(cart=cart, active=True)
         for c in cart_items:
-            Aorder.objects.create( 
+            a = Aorder.objects.create( 
                     description=c.good.description,
                     amount=c.amount,
                     ups=instance.ups,
@@ -106,9 +113,18 @@ def accept_order(request, cart_items = None):
                     desy=instance.desy,
                     ID=c.good.ID,
                     userid=UID,
+                    email=instance.email,
                     )
+            a.save()
+            order_list.append(a)
             good = get_object_or_404(Good, ID=c.good_id)
             cart_item = CartItem.objects.get(good=good, cart=cart)
-            cart_item.delete() 
-    return redirect('shop:allGoodCat')
-    
+            cart_item.delete()
+        to_email = [instance.email,]
+        subject  = "Order Confirmation from mini Amazon"
+        message  = "You order number list is: " + "\n"
+        for a in order_list:
+            message += "Order number is " + str(a.ordernum) + "\n"
+        email(to_email, subject, message)
+    return render(request, 'order_success.html', {'order_list':order_list})
+

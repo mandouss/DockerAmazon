@@ -18,7 +18,7 @@ class StockAdmin(admin.ModelAdmin):
     list_display = ['whid', 'amount', ]
 
 class AorderAdmin(admin.ModelAdmin):
-    list_display = ['ordernum', 'ID', 'description', 'amount', 'whid', 'desx', 'desy',]
+    list_display = ['ordernum', 'ID', 'description', 'amount', 'whid', 'desx', 'desy','email']
 
 class WarehouseAdmin(admin.ModelAdmin):
     list_display=['whid', 'x', 'y', ]

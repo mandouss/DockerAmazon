@@ -49,10 +49,11 @@ class Stock(models.Model):
 
 class Aorder(models.Model):
     ordernum    = models.AutoField(primary_key=True)
+    userid      = models.IntegerField(blank=True, null=True)
     ID          = models.IntegerField() 
     description = models.CharField(max_length=120)
     amount      = models.IntegerField()
-    ups         = models.CharField(max_length=120) #ups account id
+    ups         = models.CharField(max_length=120, blank=True, null=True) #ups account id
     whid        = models.IntegerField(blank=True, null=True)
     desx        = models.IntegerField(default=0)
     desy        = models.IntegerField(default=0)
@@ -62,7 +63,7 @@ class Aorder(models.Model):
     pack_ready  = models.BooleanField(default=False)
     load_ready  = models.BooleanField(default=False)
     delivered   = models.BooleanField(default=False)
-    userid      = models.IntegerField(blank=True, null=True)
+    email       = models.EmailField(default=None)
 
 class Uorder(models.Model):
     ordernum    = models.IntegerField(primary_key=True)

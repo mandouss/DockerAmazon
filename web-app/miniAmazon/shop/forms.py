@@ -25,6 +25,6 @@ class SignUpForm(UserCreationForm):
 class AorderForm(ModelForm):
     class Meta:
         model = Aorder
-        fields = ['ups', 'desx', 'desy']
+        fields = ['ups', 'desx', 'desy', 'email']
 
 

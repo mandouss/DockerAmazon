@@ -26,7 +26,11 @@ SECRET_KEY = 'q--)0-$tx97zqiosf4&0-dobs+)&iafktlr#p(9haii^$3js@('
 DEBUG = True
 
 ALLOWED_HOSTS = ['web']
-
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'rsvpplatform@gmail.com'
+EMAIL_HOST_PASSWORD = 'ece590590'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Application definition
 
@@ -84,9 +88,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'passw0rd',
-        'HOST': 'db'
-        'POST': '5432'
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 

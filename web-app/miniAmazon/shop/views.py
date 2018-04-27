@@ -48,8 +48,8 @@ def signupView(request):
             username = form.cleaned_data.get('username')
             email    = form.cleaned_data.get('email')
             signup_user = User.objects.get(username=username)        
-            customer_group = Group.objects.get(name='Customer')
-            customer_group.user_set.add(signup_user)
+            # customer_group = Group.objects.get(name='Customer')
+            # customer_group.user_set.add(signup_user)
     else:
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form':form})
