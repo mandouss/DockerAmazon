@@ -1,14 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Category,Good
+from .models import Category,Good, Aorder
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.contrib.auth.models import Group, User
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
-
+from django.contrib import auth
+from django.db.models import Q
 from cart.models import Cart
 
+ 
 def index(request):
     text_var = 'Mini Amazon'
     return HttpResponse(text_var)
@@ -71,9 +73,10 @@ def signinView(request):
     return render(request, 'accounts/signin.html', {'form':form})
 
 def signoutView(request):
-    logout(request)
+    auth.logout(request)
     return redirect('signin')
 
-
-    
-
+def orderhistoryView(request):
+    c_user = request.user
+    order_history_list = Aorder.objects.all().filter(Q(userid__exact=c_user.id) | Q(email__exact=c_user.email))
+    return render(request, 'shop/order_history.html', {'order_history_list': order_history_list })
